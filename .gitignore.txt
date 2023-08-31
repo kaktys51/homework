@@ -1,2 +1,3 @@
-homework_project/debug
-homework_project/.vs
+homework1/debug
+homework1/.vs
+homework1/x64
