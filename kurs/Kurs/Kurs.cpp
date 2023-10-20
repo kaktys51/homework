@@ -7,8 +7,8 @@ using std::cin;
 
 
 
-	Student::Student(std::string _name, int id) :
-		name(_name), sdID(id)
+	Student::Student(std::string _name, int id, int _gpa) :
+		name(_name), sdID(id), gpa(_gpa)
 	{}
 	std::string Student::returnNameString()
 	{
@@ -38,6 +38,20 @@ using std::cin;
 		} while (sdID < 1000 || sdID > 9999);
 
 	}
+	void Student::getGPA()
+	{
+		do
+		{
+			cout << "Enter student GPA: ";
+			cin >> gpa;
+			if (gpa < 10 || gpa > 99)
+			{
+				cout << std::endl;
+				cout << "****** Error: Value must have 2 digits ******" << std::endl;
+				cout << std::endl;
+			}
+		} while (gpa < 10 || gpa > 99);
+	}
 	void Student::defaultName()
 	{
 		name = " ";
@@ -46,10 +60,13 @@ using std::cin;
 	{
 		sdID = 0;
 	}
+	void Student::defaultGpa()
+	{
+		gpa = 0;
+	}
 	void Student::printStudent()
 	{
-		//printf("%-6s %-20s Student ID: %d\n", "Name:", name.c_str(), sdID);
-		printf(" %-25s %-8d %s\n", name.c_str(), sdID, "|");
+		printf(" %-25s %-12d %-5d %s\n", name.c_str(), sdID, gpa, "|");
 	}
 
 
@@ -92,20 +109,28 @@ using std::cin;
 		Student* studentToRemove = students[a - 1];
 		studentToRemove->defaultName();
 		studentToRemove->defaultId();
+		studentToRemove->defaultGpa();
 
 		for (int i = a - 1; i < countStud - 1; ++i) {
 			students[i] = students[i + 1];
 		}
 
 		students[countStud - 1] = studentToRemove;
-		//countStud--;
 	}
 	void Group::editSudent(int a)
 	{
 		for (int i = a - 1; i < countStud; ++i)
 		{
+			if (students[i]->returnNameString() == " ")
+			{
+				cout << std::endl;
+				cout << "****** Invalid student index ******" << std::endl;
+				cout << std::endl;
+				return;
+			}
 			students[i]->getName();
 			students[i]->getID();
+			students[i]->getGPA();
 			return;
 
 		}
@@ -118,6 +143,7 @@ using std::cin;
 			{
 				students[i]->getName();
 				students[i]->getID();
+				students[i]->getGPA();
 				return;
 			}
 		}
@@ -129,19 +155,19 @@ using std::cin;
 		cout << " " << std::setw(5) << " *************  " << groupName << "  *************  " << std::endl;
 		cout << std::endl;
 
-		cout << " " << std::setw(42) << std::setfill('-') << " " << std::endl;
-		printf("%-7s %-20s %s\n", " |", " Name", "Student ID  |");
-		cout << " " << std::setw(42) << std::setfill('-') << " " << std::endl;
+		cout << " " << std::setw(52) << std::setfill('-') << " " << std::endl;
+		printf("%-7s %-20s %-15s %s\n", " |", " Name", "Student ID", "GPA   | ");
+		cout << " " << std::setw(52) << std::setfill('-') << " " << std::endl;
 		for (int i = 0; i < countStud; ++i)
 		{
 			cout << " |" << i + 1 << ". ";
 			students[i]->printStudent();
-			cout << " " << std::setw(42) << std::setfill('-') << " " << std::endl;
+			cout << " " << std::setw(52) << std::setfill('-') << " " << std::endl;
 		}
 	}
 
 
-bool exitFunc(char a) //дописать адекватный выход
+bool exitFunc(char a) 
 {
 	if (a == 'y') return true;
 	else if (a == 'q') return false;
@@ -170,7 +196,7 @@ void actionGroup(Group& someGroup)
 	char toExit;
 	do
 	{
-		cout << "Do you want to continue?" << std::endl;  //дописать адекватный выход
+		cout << "Do you want to continue?" << std::endl;  
 		cout << "y - continue |";
 		cout << "q - exit |" << std::endl;
 		cin >> toExit;
@@ -184,7 +210,6 @@ void actionGroup(Group& someGroup)
 		cout << " " << std::setw(69) << std::setfill('-') << " " << std::endl;
 		cout << std::endl;
 
-		//printf("% -10s %s\n", " ", "***** Enter 0 to exit *****");
 		do
 		{
 			cin >> select;
