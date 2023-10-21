@@ -1,5 +1,2 @@
-﻿  Kurs.cpp
-  Main.cpp
-  Создание кода...
-C:\Users\Felwinter\homework\kurs\Kurs\Kurs.cpp(188): warning C4715: exitFunc: значение возвращается не при всех путях выполнения
+﻿  Main.cpp
   Kurs.vcxproj -> C:\Users\Felwinter\homework\kurs\Kurs\x64\Debug\Kurs.exe
